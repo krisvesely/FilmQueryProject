@@ -114,7 +114,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		List<Film> films = new ArrayList<>();
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PWD);
-			String sql = "SELECT * FROM film JOIN film_actor ON film.id = film_actor.film_id WHERE film_actor.actor_id = ?";
+			String sql = "SELECT film.* FROM film JOIN film_actor ON film.id = film_actor.film_id WHERE film_actor.actor_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, actorId);
 			ResultSet filmographyResult = stmt.executeQuery();
@@ -135,6 +135,41 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				films.add(film);
 			}
 			filmographyResult.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return films;
+	}
+	
+	@Override
+	public List<Film> findFilmsByKeyword(String keyword) {
+		List<Film> films = new ArrayList<>();
+		try {
+			Connection conn = DriverManager.getConnection(URL, USER, PWD);
+			String sql = "SELECT * FROM film WHERE title LIKE ? OR description LIKE ?;";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%" + keyword + "%");
+			stmt.setString(2, "%" + keyword + "%");
+			ResultSet keywordFilmResult = stmt.executeQuery();
+			while (keywordFilmResult.next()) {
+				int filmId = keywordFilmResult.getInt("id");
+				String title = keywordFilmResult.getString("title");
+				String desc = keywordFilmResult.getString("description");
+				short releaseYear = keywordFilmResult.getShort("release_year");
+				int langId = keywordFilmResult.getInt("language_id");
+				int rentDur = keywordFilmResult.getInt("rental_duration");
+				double rate = keywordFilmResult.getDouble("rental_rate");
+				int length = keywordFilmResult.getInt("length");
+				double repCost = keywordFilmResult.getDouble("replacement_cost");
+				String rating = keywordFilmResult.getString("rating");
+				String features = keywordFilmResult.getString("special_features");
+				Film film = new Film(filmId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating, features);
+//				Film film = findFilmById(filmId);
+				films.add(film);
+			}
+			keywordFilmResult.close();
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {

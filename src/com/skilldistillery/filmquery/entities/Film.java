@@ -35,6 +35,23 @@ public class Film {
 		this.rating = rating;
 		this.features = features;
 	}
+	
+	public String displayCast() {
+		String actors;
+		if (cast.size() > 0) {
+			actors = "Cast: ";
+			for (Actor actor : cast) {
+				actors += actor.displayNameOnly();
+				if (cast.indexOf(actor) < cast.size() - 1) {
+					actors += ", ";
+				}
+			}
+		}
+		else {
+			actors = "This film has no actors.";
+		}
+		return actors;
+	}
 
 	public int getFilmId() {
 		return filmId;
@@ -159,7 +176,7 @@ public class Film {
 	@Override
 	public String toString() {
 		return "\nTitle: " + title + ", Release Year: " + releaseYear 
-				+ ", Rating: " + rating + ", Language: " + language + "\nDescription: " + desc;
+				+ ", Rating: " + rating + ", Language: " + language + "\nDescription: " + desc + "\n" + displayCast();
 	}
 	
 }

@@ -97,6 +97,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String firstName = castResult.getString("first_name");
 				String lastName = castResult.getString("last_name");
 				Actor actor = new Actor(actorId, firstName, lastName);
+//				actor.setFilms(findFilmsByActorId(actorId));
 //				Actor actor = findActorById(actorId);
 				actors.add(actor);
 			}
@@ -133,6 +134,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String rating = filmographyResult.getString("rating");
 				String features = filmographyResult.getString("special_features");
 				Film film = new Film(filmId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features);
+				film.setCast(findActorsByFilmId(filmId));
 //				Film film = findFilmById(filmId);
 				films.add(film);
 			}
@@ -169,6 +171,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String rating = keywordFilmResult.getString("rating");
 				String features = keywordFilmResult.getString("special_features");
 				Film film = new Film(filmId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features);
+				film.setCast(findActorsByFilmId(filmId));
 //				Film film = findFilmById(filmId);
 				films.add(film);
 			}

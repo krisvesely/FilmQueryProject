@@ -38,13 +38,14 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String desc = filmResult.getString("description");
 				short releaseYear = filmResult.getShort("release_year");
 				int langId = filmResult.getInt("language_id");
+				String language = convertLanguage(langId);
 				int rentDur = filmResult.getInt("rental_duration");
 				double rate = filmResult.getDouble("rental_rate");
 				int length = filmResult.getInt("length");
 				double repCost = filmResult.getDouble("replacement_cost");
 				String rating = filmResult.getString("rating");
 				String features = filmResult.getString("special_features");
-				film = new Film(filmId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating, features);
+				film = new Film(filmId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features);
 				film.setCast(findActorsByFilmId(filmId));
 			}
 		
@@ -124,13 +125,14 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String desc = filmographyResult.getString("description");
 				short releaseYear = filmographyResult.getShort("release_year");
 				int langId = filmographyResult.getInt("language_id");
+				String language = convertLanguage(langId);
 				int rentDur = filmographyResult.getInt("rental_duration");
 				double rate = filmographyResult.getDouble("rental_rate");
 				int length = filmographyResult.getInt("length");
 				double repCost = filmographyResult.getDouble("replacement_cost");
 				String rating = filmographyResult.getString("rating");
 				String features = filmographyResult.getString("special_features");
-				Film film = new Film(filmId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating, features);
+				Film film = new Film(filmId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features);
 //				Film film = findFilmById(filmId);
 				films.add(film);
 			}
@@ -159,13 +161,14 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String desc = keywordFilmResult.getString("description");
 				short releaseYear = keywordFilmResult.getShort("release_year");
 				int langId = keywordFilmResult.getInt("language_id");
+				String language = convertLanguage(langId);
 				int rentDur = keywordFilmResult.getInt("rental_duration");
 				double rate = keywordFilmResult.getDouble("rental_rate");
 				int length = keywordFilmResult.getInt("length");
 				double repCost = keywordFilmResult.getDouble("replacement_cost");
 				String rating = keywordFilmResult.getString("rating");
 				String features = keywordFilmResult.getString("special_features");
-				Film film = new Film(filmId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating, features);
+				Film film = new Film(filmId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features);
 //				Film film = findFilmById(filmId);
 				films.add(film);
 			}
@@ -176,6 +179,27 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			e.printStackTrace();
 		}
 		return films;
+	}
+	
+	@Override
+	public String convertLanguage(int langId) {
+		String language = null;
+		try {
+			Connection conn = DriverManager.getConnection(URL, USER, PWD);
+			String sql = "SELECT language.* FROM film JOIN language ON film.language_id = language.id WHERE language.id = ?;";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, langId);
+			ResultSet languageResult = stmt.executeQuery();
+			if (languageResult.next()) {
+				language = languageResult.getString("name");
+			}
+			languageResult.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return language;
 	}
 
 }

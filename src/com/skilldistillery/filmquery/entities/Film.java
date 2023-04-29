@@ -10,6 +10,7 @@ public class Film {
 	private String desc;
 	private short releaseYear;
 	private int langId;
+	private String language;
 	private int rentDur;
 	private double rate;
 	private int length;
@@ -20,12 +21,13 @@ public class Film {
 	
 	public Film() {}
 	
-	public Film(int filmId, String title, String desc, short releaseYear, int langId, int rentDur, double rate, int length, double repCost, String rating, String features) {
+	public Film(int filmId, String title, String desc, short releaseYear, int langId, String language, int rentDur, double rate, int length, double repCost, String rating, String features) {
 		this.filmId = filmId;
 		this.title = title;
 		this.desc = desc;
 		this.releaseYear = releaseYear;
 		this.langId = langId;
+		this.language = language;
 		this.rentDur = rentDur;
 		this.rate = rate;
 		this.length = length;
@@ -157,7 +159,7 @@ public class Film {
 	@Override
 	public String toString() {
 		return "\nTitle: " + title + ", Release Year: " + releaseYear 
-				+ ", Rating: " + rating + "\nDescription: " + desc;
+				+ ", Rating: " + rating + ", Language: " + language + "\nDescription: " + desc;
 	}
 	
 }

@@ -17,5 +17,7 @@ public interface DatabaseAccessor {
 	List<Film> findFilmsByKeyword(String keyword);
 	
 	String convertLanguage(int langId);
+	
+	String findCategory(int filmId);
 
 }

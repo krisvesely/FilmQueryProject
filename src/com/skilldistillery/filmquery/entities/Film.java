@@ -17,11 +17,12 @@ public class Film {
 	private double repCost;
 	private String rating;
 	private String features;
+	private String category;
 	List<Actor> cast;
 	
 	public Film() {}
 	
-	public Film(int filmId, String title, String desc, short releaseYear, int langId, String language, int rentDur, double rate, int length, double repCost, String rating, String features) {
+	public Film(int filmId, String title, String desc, short releaseYear, int langId, String language, int rentDur, double rate, int length, double repCost, String rating, String features, String category) {
 		this.filmId = filmId;
 		this.title = title;
 		this.desc = desc;
@@ -34,6 +35,7 @@ public class Film {
 		this.repCost = repCost;
 		this.rating = rating;
 		this.features = features;
+		this.category = category;
 	}
 	
 	public String displayCast() {
@@ -54,7 +56,7 @@ public class Film {
 	}
 	
 	public String displayFullDetails() {
-		return "\nTitle: " + title + "\nDescription: " + desc + "\nRelease Year: " + releaseYear 
+		return "\nTitle: " + title + "\nCategory: " + category + "\nDescription: " + desc + "\nRelease Year: " + releaseYear 
 				+ "\nRating: " + rating + "\nLanguage: " + language + "\nLength: " + length + " minutes"
 				+ "\nFilm ID: " + filmId + "\nRental Duration: " + rentDur + " days" + "\nRental Rate: $" + rate 
 				+ "\nReplacement Cost: $" + repCost	+ "\nFeatures: " + features

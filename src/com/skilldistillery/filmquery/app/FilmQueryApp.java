@@ -17,8 +17,8 @@ public class FilmQueryApp {
 		app.launch();
 	}
 
-	private void test() {
-
+//	private void test() {
+//
 //    	Film film = db.findFilmById(54);
 //		if (film != null) {
 //			System.out.println(film);
@@ -57,7 +57,7 @@ public class FilmQueryApp {
 //		else {
 //			System.out.println("No such actor found!");
 //		}
-	}
+//	}
 
 	private void launch() {
 		Scanner input = new Scanner(System.in);
@@ -101,7 +101,7 @@ public class FilmQueryApp {
 	}
 
 	private void displayMenu() {
-		System.out.println("\n__________________Menu__________________");
+		System.out.println("\n_________________Menu_________________");
 		System.out.println("1: Look up a film by its ID.");
 		System.out.println("2: Look up a film by a search keyword.");
 		System.out.println("3: Exit the application.");
@@ -124,7 +124,7 @@ public class FilmQueryApp {
 	private void displayAllOption(Scanner input, Film film) {
 		System.out.println("\n1. Return to main menu.");
 		System.out.println("2. View the film's complete details.");
-		System.out.print("Please enter your selection: ");
+		System.out.print("Please enter your choice: ");
 		String choice = input.next();
 		boolean validResponse = false;
 		do {	

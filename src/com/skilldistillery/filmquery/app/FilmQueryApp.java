@@ -69,9 +69,9 @@ public class FilmQueryApp {
 
 	private void startUserInterface(Scanner input) {
 		boolean interfaceOpen = true;
-		
+
 		System.out.println("Welcome to the Film Database!");
-		
+
 		do {
 			displayMenu();
 			boolean validResponse = false;
@@ -115,19 +115,18 @@ public class FilmQueryApp {
 		if (film != null) {
 			System.out.println(film);
 			displayAllOption(input, film);
-		}
-		else {
+		} else {
 			System.out.println("\nThere is no film with that ID in the database.");
 		}
 	}
-	
+
 	private void displayAllOption(Scanner input, Film film) {
 		System.out.println("\n1. Return to main menu.");
 		System.out.println("2. View the film's complete details.");
 		System.out.print("Please enter your choice: ");
 		String choice = input.next();
 		boolean validResponse = false;
-		do {	
+		do {
 			switch (choice) {
 			case "1":
 				validResponse = true;
@@ -141,19 +140,20 @@ public class FilmQueryApp {
 			}
 		} while (!validResponse);
 	}
-	
+
 	private void lookupFilmByKeyword(Scanner input) {
 		System.out.print("\nPlease enter a keyword: ");
 		String filmKeyword = input.next();
 		List<Film> keywordFilms = db.findFilmsByKeyword(filmKeyword);
 		if (keywordFilms.size() >= 1) {
-			System.out.println("\nHere are the " + keywordFilms.size() + " film(s) with '" + filmKeyword + "' in their title or description:");
+			System.out.println("\nHere are the " + keywordFilms.size() + " film(s) with '" + filmKeyword
+					+ "' in their title or description:");
 			for (Film film : keywordFilms) {
 				System.out.println(film);
 			}
-		}
-		else {
-			System.out.println("\nThere is no film in the database containing '" + filmKeyword + "' within its title or description.");
+		} else {
+			System.out.println("\nThere is no film in the database containing '" + filmKeyword
+					+ "' within its title or description.");
 		}
 	}
 

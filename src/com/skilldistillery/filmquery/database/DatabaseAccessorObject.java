@@ -5,11 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
+import com.skilldistillery.filmquery.entities.InventoryItem;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
@@ -48,6 +50,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String category = findCategory(filmId);
 				film = new Film(filmId, title, desc, releaseYear, langId, language, rentDur, rate, length, repCost, rating, features, category);
 				film.setCast(findActorsByFilmId(filmId));
+				film.setInventoryItems(findInventoryByFilmId(filmId));
 			}
 		
 			filmResult.close();
@@ -192,6 +195,36 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			e.printStackTrace();
 		}
 		return films;
+	}
+	
+	@Override
+	public List<InventoryItem> findInventoryByFilmId(int filmId) {
+		List<InventoryItem> inventoryItems = new ArrayList<>();
+		try {
+			Connection conn = DriverManager.getConnection(URL, USER, PWD);
+			String sql = "SELECT inventory_item.* "
+					+ "FROM film "
+					+ "JOIN inventory_item ON film.id = inventory_item.film_id "
+					+ "WHERE film.id = ?;";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet inventoryResult = stmt.executeQuery();
+			while (inventoryResult.next()) {
+				int id = inventoryResult.getInt("id");
+				int storeId = inventoryResult.getInt("store_id");
+				String condition = inventoryResult.getString("media_condition");
+				Timestamp timestamp = inventoryResult.getTimestamp("last_update");
+				InventoryItem item = new InventoryItem(id, filmId, storeId, condition, timestamp);
+				inventoryItems.add(item);
+			}
+			inventoryResult.close();
+			stmt.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return inventoryItems;
 	}
 	
 	@Override

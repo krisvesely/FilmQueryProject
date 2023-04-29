@@ -18,11 +18,14 @@ public class Film {
 	private String rating;
 	private String features;
 	private String category;
-	List<Actor> cast;
-	
-	public Film() {}
-	
-	public Film(int filmId, String title, String desc, short releaseYear, int langId, String language, int rentDur, double rate, int length, double repCost, String rating, String features, String category) {
+	private List<Actor> cast;
+	private List<InventoryItem> inventoryItems;
+
+	public Film() {
+	}
+
+	public Film(int filmId, String title, String desc, short releaseYear, int langId, String language, int rentDur,
+			double rate, int length, double repCost, String rating, String features, String category) {
 		this.filmId = filmId;
 		this.title = title;
 		this.desc = desc;
@@ -37,7 +40,15 @@ public class Film {
 		this.features = features;
 		this.category = category;
 	}
-	
+
+	public String displayFullDetails() {
+		return "\nTitle: " + title + "\nCategory: " + category + "\nDescription: " + desc + "\nRelease Year: "
+				+ releaseYear + "\nRating: " + rating + "\nLanguage: " + language + "\nLength: " + length + " minutes"
+				+ "\nFilm ID: " + filmId + "\nRental Duration: " + rentDur + " days" + "\nRental Rate: $" + rate
+				+ "\nReplacement Cost: $" + repCost + "\nFeatures: " + features + "\n" + displayCast() + "\n"
+				+ displayInventory();
+	}
+
 	public String displayCast() {
 		String actors;
 		if (cast.size() > 0) {
@@ -48,19 +59,23 @@ public class Film {
 					actors += ", ";
 				}
 			}
-		}
-		else {
+		} else {
 			actors = "This film has no actors.";
 		}
 		return actors;
 	}
-	
-	public String displayFullDetails() {
-		return "\nTitle: " + title + "\nCategory: " + category + "\nDescription: " + desc + "\nRelease Year: " + releaseYear 
-				+ "\nRating: " + rating + "\nLanguage: " + language + "\nLength: " + length + " minutes"
-				+ "\nFilm ID: " + filmId + "\nRental Duration: " + rentDur + " days" + "\nRental Rate: $" + rate 
-				+ "\nReplacement Cost: $" + repCost	+ "\nFeatures: " + features
-				+ "\n" + displayCast();
+
+	public String displayInventory() {
+		String items;
+		if (inventoryItems.size() > 0) {
+			items = "Copies of this film in the inventory: ";
+			for (InventoryItem item : inventoryItems) {
+				items += "\n-> " + item;
+			}
+		} else {
+			items = "This film has no copies in the inventory.";
+		}
+		return items;
 	}
 
 	public int getFilmId() {
@@ -160,6 +175,31 @@ public class Film {
 		this.cast = cast;
 	}
 
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public List<InventoryItem> getInventoryItems() {
+		List<InventoryItem> inventoryCopy = new ArrayList<>(inventoryItems);
+		return inventoryCopy;
+	}
+
+	public void setInventoryItems(List<InventoryItem> inventoryItems) {
+		this.inventoryItems = inventoryItems;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(cast, desc, features, filmId, langId, length, rate, rating, releaseYear, rentDur, repCost,
@@ -185,8 +225,8 @@ public class Film {
 
 	@Override
 	public String toString() {
-		return "\nTitle: " + title + ", Release Year: " + releaseYear 
-				+ ", Rating: " + rating + ", Language: " + language + "\nDescription: " + desc + "\n" + displayCast();
+		return "\nTitle: " + title + ", Release Year: " + releaseYear + ", Rating: " + rating + ", Language: "
+				+ language + "\nDescription: " + desc + "\n" + displayCast();
 	}
-	
+
 }

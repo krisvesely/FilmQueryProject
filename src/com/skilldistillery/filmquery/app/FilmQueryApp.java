@@ -113,12 +113,33 @@ public class FilmQueryApp {
 		int filmId = input.nextInt();
 		Film film = db.findFilmById(filmId);
 		if (film != null) {
-			System.out.println("\nHere is the film with ID " + filmId + ":");
 			System.out.println(film);
+			displayAllOption(input, film);
 		}
 		else {
 			System.out.println("\nThere is no film with that ID in the database.");
 		}
+	}
+	
+	private void displayAllOption(Scanner input, Film film) {
+		System.out.println("\n1. Return to main menu.");
+		System.out.println("2. View the film's complete details.");
+		System.out.print("Please enter your selection: ");
+		String choice = input.next();
+		boolean validResponse = false;
+		do {	
+			switch (choice) {
+			case "1":
+				validResponse = true;
+				break;
+			case "2":
+				System.out.println(film.displayFullDetails());
+				validResponse = true;
+				break;
+			default:
+				System.out.print("\nInvalid response. Please enter 1 or 2 according to your choice: ");
+			}
+		} while (!validResponse);
 	}
 	
 	private void lookupFilmByKeyword(Scanner input) {

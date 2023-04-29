@@ -52,6 +52,14 @@ public class Film {
 		}
 		return actors;
 	}
+	
+	public String displayFullDetails() {
+		return "\nTitle: " + title + "\nDescription: " + desc + "\nRelease Year: " + releaseYear 
+				+ "\nRating: " + rating + "\nLanguage: " + language + "\nLength: " + length + " minutes"
+				+ "\nFilm ID: " + filmId + "\nRental Duration: " + rentDur + " days" + "\nRental Rate: $" + rate 
+				+ "\nReplacement Cost: $" + repCost	+ "\nFeatures: " + features
+				+ "\n" + displayCast();
+	}
 
 	public int getFilmId() {
 		return filmId;

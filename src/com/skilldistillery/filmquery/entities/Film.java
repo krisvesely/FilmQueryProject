@@ -37,7 +37,7 @@ public class Film {
 		this.length = length;
 		this.repCost = repCost;
 		this.rating = rating;
-		this.features = features;
+		this.features = modifyFeatures(features);
 		this.category = category;
 	}
 
@@ -68,7 +68,7 @@ public class Film {
 	public String displayInventory() {
 		String items;
 		if (inventoryItems.size() > 0) {
-			items = "Copies of this film in the inventory: ";
+			items = inventoryItems.size() + " copies of this film in the inventory: ";
 			for (InventoryItem item : inventoryItems) {
 				items += "\n-> " + item;
 			}
@@ -76,6 +76,17 @@ public class Film {
 			items = "This film has no copies in the inventory.";
 		}
 		return items;
+	}
+	
+	public String modifyFeatures(String oldFeatures) {
+		String newFeatures;
+			if (!oldFeatures.isEmpty() && oldFeatures.contains(",")) {
+				newFeatures = oldFeatures.replace(",", ", ");
+			}
+			else {
+				newFeatures = oldFeatures;
+			}
+		return newFeatures;
 	}
 
 	public int getFilmId() {

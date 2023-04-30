@@ -10,8 +10,6 @@ public class Actor {
 	private String lastName;
 	private List<Film> films;
 
-	// methods
-
 	public Actor() {
 	}
 

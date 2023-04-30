@@ -70,7 +70,7 @@ public class FilmQueryApp {
 	private void startUserInterface(Scanner input) {
 		boolean interfaceOpen = true;
 
-		System.out.println("Welcome to the Film Database!");
+		System.out.println("Welcome to the Film Database Query Tool!");
 
 		do {
 			displayMenu();
@@ -109,7 +109,7 @@ public class FilmQueryApp {
 	}
 
 	private void lookupFilmById(Scanner input) {
-		System.out.print("\nPlease enter a film ID: ");
+		System.out.print("\nPlease enter a film ID (between 1 and 1000): ");
 		int filmId = input.nextInt();
 		Film film = db.findFilmById(filmId);
 		if (film != null) {
@@ -124,9 +124,9 @@ public class FilmQueryApp {
 		System.out.println("\n1. Return to main menu.");
 		System.out.println("2. View the film's complete details.");
 		System.out.print("Please enter your choice: ");
-		String choice = input.next();
 		boolean validResponse = false;
 		do {
+			String choice = input.next();
 			switch (choice) {
 			case "1":
 				validResponse = true;
@@ -156,5 +156,4 @@ public class FilmQueryApp {
 					+ "' within its title or description.");
 		}
 	}
-
 }

@@ -19,7 +19,7 @@ with object member fields that correspond to each column's attribute value.
 - Git
 
 # Lessons Learned
-- Relies upon a database accessor object containing all implementations 
+- Relies upon a database accessor object class containing all implementations 
 of the Driver Manager's getConnection() method.
 - Used a Maven project object model .xml configuration file 
 to define a MySQL driver dependency element.
